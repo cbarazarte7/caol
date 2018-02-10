@@ -10,6 +10,34 @@
 	}
 </style>
 		<script language='javascript' src="js/popcalendar.js"></script>
+    <script>
+      var xmlhttp;
+      if (window.XMLHttpRequest) {
+          // code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+        } else {
+          // code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+      xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+          var selectList = document.getElementById('list1');    
+            var val = xmlhttp.responseText; 
+            var jsonData = JSON.parse(val);
+
+            for (var i in jsonData.value) {
+              var option = document.createElement('option');
+              option.value = jsonData.value[i];
+              option.text = jsonData.text[i];
+              selectList.appendChild(option);
+            }
+        }
+      }
+      
+
+      xmlhttp.open("GET","http://localhost:8000/",true);
+      xmlhttp.send();
+    </script>
 <SCRIPT language="JavaScript">
 <!--
 
@@ -814,15 +842,7 @@ type=text/javascript></SCRIPT>
                         <tr>
                           <td><select multiple size="8" name="list1" id="list1" style="width:280">
 
-<option value="aline.chastel" >Aline Chastel Lima</option>
 
-<option value="bruno.freitas" >Bruno Sousa Freitas</option>
-<option value="contato" >Carlos Cezar Girão de Arruda</option>
-<option value="carlos.arruda" >Carlos Flávio Girão de Arruda</option>
-<option value="carlos.carvalho" >Carlos Henrique de Carvalho Filho</option>
-<option value="felipe.chahad" >Felipe Chahad</option>
-
-<option value="silvio.maraes" >Silvio Marães Ferreira</option>
                             </select>
                           </td>
                           <td align="center" valign="middle"><input name="button" type="button" onClick="move(list1,list2)" value=">>">
@@ -830,8 +850,8 @@ type=text/javascript></SCRIPT>
                               <input name="button" type="button" onClick="move(list2,list1)" value="<<">
                           </td>
                           <td><select multiple size="8" name="list2" id="list2" style="width:280">
-<option value="anapaula.chiodaro" >Ana Paula Fontes Martins Chiodaro</option>
-<option value="renato.pereira" >Renato Marcus Pereira</option>
+                       <option value="anapaula.chiodaro" >Ana Paula Fontes Martins Chiodaro</option>
+<option value="renato.pereira" >Renato Marcus Pereira</option>   
                             </select>
                               <input type="hidden"  name="lista_analista" value="">
                           </td>
